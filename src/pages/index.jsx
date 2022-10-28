@@ -1,17 +1,20 @@
-import Image from 'next/future/image'
-import Head from 'next/head'
-import Link from 'next/link'
-import clsx from 'clsx'
+import {
+  GitHubIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  TwitterIcon,
+} from '@/components/SocialIcons'
 
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
-import {
-  TwitterIcon,
-  InstagramIcon,
-  GitHubIcon,
-  LinkedInIcon,
-} from '@/components/SocialIcons'
+import Head from 'next/head'
+import Image from 'next/future/image'
+import Link from 'next/link'
+import clsx from 'clsx'
+import { formatDate } from '@/lib/formatDate'
+import { generateRssFeed } from '@/lib/generateRssFeed'
+import { getAllArticles } from '@/lib/getAllArticles'
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
@@ -21,9 +24,6 @@ import logoAirbnb from '@/images/logos/airbnb.svg'
 import logoFacebook from '@/images/logos/facebook.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
 import logoStarbucks from '@/images/logos/starbucks.svg'
-import { generateRssFeed } from '@/lib/generateRssFeed'
-import { getAllArticles } from '@/lib/getAllArticles'
-import { formatDate } from '@/lib/formatDate'
 
 function MailIcon(props) {
   return (
@@ -250,21 +250,19 @@ export default function Home({ articles }) {
   return (
     <>
       <Head>
-        <title>
-          Spencer Sharp - Software designer, founder, and amateur astronaut
-        </title>
+        <title>Sankalp Mukim - Backend, Devops, Engineering</title>
         <meta
           name="description"
-          content="I’m Spencer, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms."
+          content="I’m Sankalp, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms."
         />
       </Head>
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-            Software designer, founder, and amateur astronaut.
+            Backend, Devops, Engineering.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Spencer, a software designer and entrepreneur based in New York
+            I’m Sankalp, a software designer and entrepreneur based in New York
             City. I’m the founder and CEO of Planetaria, where we develop
             technologies that empower regular people to explore space on their
             own terms.

@@ -1,6 +1,5 @@
-import Link from 'next/link'
-
 import { Container } from '@/components/Container'
+import Link from 'next/link'
 
 function NavLink({ href, children }) {
   return (
@@ -27,7 +26,7 @@ export function Footer() {
                 <NavLink href="/uses">Uses</NavLink>
               </div>
               <p className="text-sm text-zinc-400 dark:text-zinc-500">
-                &copy; {new Date().getFullYear()} Spencer Sharp. All rights
+                &copy; {new Date().getFullYear()} Sankalp Mukim. All rights
                 reserved.
               </p>
             </div>

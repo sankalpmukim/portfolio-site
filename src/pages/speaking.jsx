@@ -1,6 +1,5 @@
-import Head from 'next/head'
-
 import { Card } from '@/components/Card'
+import Head from 'next/head'
 import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'
 
@@ -29,7 +28,7 @@ export default function Speaking() {
   return (
     <>
       <Head>
-        <title>Speaking - Spencer Sharp</title>
+        <title>Speaking - Sankalp Mukim</title>
         <meta
           name="description"
           content="I’ve spoken at events all around the world and been interviewed for many podcasts."

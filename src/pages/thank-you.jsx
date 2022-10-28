@@ -1,12 +1,11 @@
 import Head from 'next/head'
-
 import { SimpleLayout } from '@/components/SimpleLayout'
 
 export default function ThankYou() {
   return (
     <>
       <Head>
-        <title>You’re subscribed - Spencer Sharp</title>
+        <title>You’re subscribed - Sankalp Mukim</title>
         <meta
           name="description"
           content="Thanks for subscribing to my newsletter."

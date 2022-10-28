@@ -1,6 +1,5 @@
-import Head from 'next/head'
-
 import { Card } from '@/components/Card'
+import Head from 'next/head'
 import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'
 
@@ -29,7 +28,7 @@ export default function Uses() {
   return (
     <>
       <Head>
-        <title>Uses - Spencer Sharp</title>
+        <title>Uses - Sankalp Mukim</title>
         <meta
           name="description"
           content="Software I use, gadgets I love, and other things I recommend."

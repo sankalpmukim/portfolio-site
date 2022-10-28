@@ -1,7 +1,6 @@
-import Image from 'next/future/image'
-import Head from 'next/head'
-
 import { Card } from '@/components/Card'
+import Head from 'next/head'
+import Image from 'next/future/image'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import logoAnimaginary from '@/images/logos/animaginary.svg'
 import logoCosmos from '@/images/logos/cosmos.svg'
@@ -62,7 +61,7 @@ export default function Projects() {
   return (
     <>
       <Head>
-        <title>Projects - Spencer Sharp</title>
+        <title>Projects - Sankalp Mukim</title>
         <meta
           name="description"
           content="Things I’ve made trying to put my dent in the universe."
