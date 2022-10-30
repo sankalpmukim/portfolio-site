@@ -274,7 +274,7 @@ export default function Home({ articles }) {
               icon={GitHubIcon}
             />
             <SocialLink
-              href="https://linkedin.in/sankalpmukim"
+              href="https://linkedin.com/in/sankalpmukim"
               aria-label="Follow on LinkedIn"
               icon={LinkedInIcon}
             />
