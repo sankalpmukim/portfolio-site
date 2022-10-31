@@ -10,17 +10,23 @@ import logoPlanetaria from '@/images/logos/planetaria.svg'
 
 const projects = [
   {
-    name: 'Planetaria',
+    name: 'Numpuz',
     description:
       'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
+    link: {
+      href: 'https://numpuz.sankalpmukim.dev',
+      label: 'numpuz.sankalpmukim.dev',
+    },
     logo: logoPlanetaria,
   },
   {
-    name: 'Animaginary',
+    name: 'Shared Clipboard',
     description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
+      'A simple, secure, and free way to share text between devices using a single link.',
+    link: {
+      href: 'https://clip.sankalpmukim.dev',
+      label: 'clip.sankalpmukim.dev',
+    },
     logo: logoAnimaginary,
   },
   {
