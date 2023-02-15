@@ -1,3 +1,5 @@
+import * as CONSTANTS from '../lib/constants'
+
 import {
   GitHubIcon,
   InstagramIcon,
@@ -251,10 +253,7 @@ export default function Home({ articles }) {
     <>
       <Head>
         <title>Sankalp Mukim - Backend, Devops, Engineering</title>
-        <meta
-          name="description"
-          content="I’m Sankalp, a software designer and entrepreneur based in Delhi. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms."
-        />
+        <meta name="description" content={CONSTANTS.INTRO} />
       </Head>
       <Container className="mt-9">
         <div className="max-w-2xl">
@@ -262,10 +261,7 @@ export default function Home({ articles }) {
             Backend, Devops, Engineering.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Sankalp, a software designer and entrepreneur based in New York
-            City. I’m the founder and CEO of Planetaria, where we develop
-            technologies that empower regular people to explore space on their
-            own terms.
+            {CONSTANTS.INTRO}
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
@@ -274,12 +270,12 @@ export default function Home({ articles }) {
               icon={GitHubIcon}
             />
             <SocialLink
-              href="https://linkedin.com/in/sankalpmukim"
+              href="https://www.linkedin.com/in/sankalpmukim"
               aria-label="Follow on LinkedIn"
               icon={LinkedInIcon}
             />
             <SocialLink
-              href="https://twitter.com/SankalpMukim"
+              href="https://twitter.com/IceCreamChai"
               aria-label="Follow on Twitter"
               icon={TwitterIcon}
             />
