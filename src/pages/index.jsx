@@ -1,4 +1,4 @@
-import * as CONSTANTS from '../lib/constants'
+import * as CONSTANTS from '@/lib/constants'
 
 import {
   GitHubIcon,
