@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react'
-
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
-
 import '@/styles/tailwind.css'
 import 'focus-visible'
+
+import { useEffect, useRef } from 'react'
+
+import { Analytics } from '@vercel/analytics/react'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
 
 function usePrevious(value) {
   let ref = useRef()
@@ -33,6 +34,7 @@ export default function App({ Component, pageProps, router }) {
         </main>
         <Footer />
       </div>
+      <Analytics />
     </>
   )
 }
