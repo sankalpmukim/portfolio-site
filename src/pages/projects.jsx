@@ -1,6 +1,6 @@
 import { Card } from '@/components/Card'
 import Head from 'next/head'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import logoAnimaginary from '@/images/logos/animaginary.svg'
 import logoCosmos from '@/images/logos/cosmos.svg'
