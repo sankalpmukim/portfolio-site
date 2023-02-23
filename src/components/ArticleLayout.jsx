@@ -23,11 +23,11 @@ export function ArticleLayout({
   isRssFeed = false,
   previousPathname,
 }) {
-  let router = useRouter()
-
   if (isRssFeed) {
     return children
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const router = useRouter()
 
   return (
     <>
