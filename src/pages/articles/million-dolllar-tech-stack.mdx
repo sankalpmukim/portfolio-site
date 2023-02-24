@@ -1,0 +1,132 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'Sankalp Mukim',
+  date: '2023-02-25',
+  title: 'My Million Dollar Startup Tech Stack in 2023',
+  description:
+    'What is the hot new tech stack for startups in 2023? I will tell you in this article.',
+}
+
+export default function IntroducingAnimaginary(props) {
+  return <ArticleLayout meta={meta} {...props} />
+}
+
+So in this article, I will write about the Ideal tech stack for startups in 2023. This article is useful for people looking planning tech for their startups, new developers looking for technologies to learn, and people who are interested in the future of technology.
+
+My focus in deciding these technologies is on the following points:
+
+- Fast MVP developemnt.
+- The technologies should be reliable and stable.
+- It should be fairly modern(not ancient) but not bleeding edge(not battle tested).
+- Developer friendly.
+- Requires less code to accomplish more. (Less code is better)
+- The Complete Stack - from development to deployment to monitoring.
+
+I plan to evaluate multiple options for each preference and then choose the best one. I will also try to explain why I chose that particular technology.
+
+## Typescript - The programming language
+
+Going with typescript is a no brainer choice. Have been using typescript professionally for over 2 years now. It is a superset of javascript and adds types to javascript. Typescript is a great language and it is a must have for any serious project.
+
+- Has amazing tooling so makes development faster.
+- Lets developers tackle errors before they go to production.
+- With focus on _fast MVP development_, typescript can be used for both the frontend and the backend and a small development team.
+
+### Other notable options
+
+<details>
+<summary>Javascript</summary>
+
+If a developer prefers javascript over typescript and they already know javascript really well, they should really consider trying typescript because for most developers, it is a better language. But if they are not willing to learn typescript, they can go with javascript.
+
+</details>
+
+<details>
+<summary>Wordpress</summary>
+
+Wordpress is a great option for a startup. It is easy to use and has a lot of plugins. It is also very easy to deploy and maintain. But it is not a great option for a startup that wants to scale. Wordpress is not very performant and it is not very developer friendly. It is also not very secure.
+
+It is a great option for a small startup that wants to get a quick MVP out. Later on they can migrate to a more performant and secure stack.
+
+</details>
+
+<details>
+<summary>Django or Ruby on Rails</summary>
+
+These are good complete MVC frameworks that help developers build web applications quickly. They are very developer friendly and are very developer friendly with a huge comminity. They are also very secure and performant. But they are not very modern and they are not very fast.
+
+With both of them, you get restricted on getting a very impressive frontend that has high requirements for interactivity. You will need to pair it with an external solution for frontend. More on it in frameworks section.
+
+</details>
+
+## NextJS - The fullstack framework
+
+NextJS is a great framework for building fullstack web applications. It is a React framework that has a lot of features that make it a great choice for a startup.
+
+- It is great for a single developer/ small team to develop both the frontend and the backend.
+- It is amazing for SEO.
+- It uses React under the hood, so it has a huge community to help debug.
+- If you don't prefer React, you can use similar frameworks like Nuxt or SvelteKit.
+
+### Other notable options
+
+<details>
+<summary>Django</summary>
+
+Django is a powerful Full Stack framework used mostly for it's backend capabilities in the real world but has great routing and MVC structure. If your developer that knows python really well, this is a great choice.
+
+Frontend needs to be handled separately with more effort because it's templating language is very lacking.
+
+</details>
+
+<details>
+<summary>Ruby on Rails</summary>
+
+Ruby on Rails is one of the old but gold framework options. It was the first option in this category that really set the standard for others.
+
+Frontend needs to be handled separately with more effort because it doesn't have enough tools to facilitate developing a fairly interactive application.
+
+</details>
+
+<details>
+<summary>Django</summary>
+
+Django is a powerful Full Stack framework used mostly for it's backend capabilities
+in the real world but has great routing and MVC structure.
+
+</details>
+
+## Prisma + Postgres - The Database
+
+Prisma is currently my favourite ORM for Typescript. It has the best typescript integration and a powerful Schema Service. It is extremely mature now at it's 4.0 version. It is also very developer friendly and has a lot of features that make it a great choice for fast features iteration.
+
+Postgres is the world's most scalable Relational DB. I care about having a reliable choice that supports transactions and has a lot of features. Postgres is a great choice for that. Because of being so mature, it has a lot of tools and plugins that make it a great choice for a startup. There is third party options that make it easy to deploy and manage (like Cockroach DB).
+
+## Supabase - Authentication, Storage, and more
+
+Supabase is an extremely underrated powerful open source technology. It is a complete backend solution for startups. It has a lot of features that make it a great choice for a startup. For our use case, we will be using it for authentication, storage. It also has a phenomenal NoSQL database service that is in front of a postgres server, but we will consider other options for the database.
+
+I love using supabase for Authentication primarily. I don't have to worry about setting up a database and writing code for authentication. I just have to use the supabase client and I am done. It is also very secure and has a lot of features like 2FA, email verification, etc. It is available for mobile as well as web. It supports a huge list of providers like Google, Facebook, Github, Twitter, etc.
+
+Supabase also has a storage service that is very easy to use. It is very simple to use and comes feature packed with the Supabase client.
+
+## Tanstack Query
+
+It is an awesome modern tool that has the best client side API for asynchronous state management for frontend frameworks. It is extremely typesafe, and contains a layer for client side caching. With an elegant API, you can control all options related to caching and fetching and automatically handle loading and error states.
+
+## TRPC
+
+Trpc is a tool that forms a typesafe bridge between the server and the client with minimal developer effort and snappy DX. It is a one time setup effort that can work well between any two typescript codebases.
+
+## Rate limiting
+
+Now we are getting slightly outside the pure core features development and into concerns for scalable applications. My favourite tools for scalable rate checking protections currently is Upstash with Redis. They have a great SDK that works for most tools.
+
+## Axiom
+
+Axiom is a logging tool that can ingenst petabytes of data and provide useful insight. A good logs infrastructure is crucial to build and deliver a reliable error free app to your users.
+
+## Netlify / Vercel
+
+I believe that the best way to deploy a web application is to use a serverless architecture. It is a great way to scale and it is also very cost effective. Netlify and Vercel are the best options for this. They are both very developer friendly and have a lot of features that make it a great choice for a startup. They have CLI tools that make it easy to deploy and manage.
