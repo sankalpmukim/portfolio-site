@@ -40,46 +40,46 @@ export default function Uses() {
       >
         <div className="space-y-20">
           <ToolsSection title="Workstation">
-            <Tool title="16” MacBook Pro, M1 Max, 64GB RAM (2021)">
-              I was using an Intel-based 16” MacBook Pro prior to this and the
-              difference is night and day. I’ve never heard the fans turn on a
-              single time, even under the incredibly heavy loads I put it
-              through with our various launch simulations.
+            <Tool title="HP Pavilion Gaming 15, Ryzen 4500, 16GB RAM (2021)">
+              I was using an Intel-based 15” Acer Nitro 5 prior to this and the
+              difference is night and day. I am able to work with a peace of
+              mind that my main weapon of choice is going to be available and
+              sharp at all times.
             </Tool>
-            <Tool title="Apple Pro Display XDR (Standard Glass)">
-              The only display on the market if you want something HiDPI and
-              bigger than 27”. When you’re working at planetary scale, every
-              pixel you can get counts.
+            <Tool title="BenQ GW2480T 24 inch (60cm) 1920 X 1080">
+              The best option in the market in these specs. I have been using
+              this monitor for over a year now and it has been a great. It makes
+              me faster and more productive.
             </Tool>
-            <Tool title="IBM Model M SSK Industrial Keyboard">
+            <Tool title="Redgear Shadow Blade Mechanical Keyboard">
               They don’t make keyboards the way they used to. I buy these any
               time I see them go up for sale and keep them in storage in case I
               need parts or need to retire my main.
             </Tool>
-            <Tool title="Apple Magic Trackpad">
-              Something about all the gestures makes me feel like a wizard with
-              special powers. I really like feeling like a wizard with special
-              powers.
-            </Tool>
-            <Tool title="Herman Miller Aeron Chair">
-              If I’m going to slouch in the worst ergonomic position imaginable
-              all day, I might as well do it in an expensive chair.
+            <Tool title="Logitech G102 LightSync Gaming Mouse">
+              Great mouse for the price. Super accurate and comfortable for
+              usage for long periods of time.
             </Tool>
           </ToolsSection>
           <ToolsSection title="Development tools">
-            <Tool title="Sublime Text 4">
-              I don’t care if it’s missing all of the fancy IDE features
-              everyone else relies on, Sublime Text is still the best text
-              editor ever made.
+            <Tool title="Visual Studio Code">
+              I am extremely fast with VS Code. I have tried other editors but I
+              always come back to VS Code. I have been using it for over 3
+              years. I have been trying to get back to learning Vim but I am
+              just too comfortable with VS Code.
             </Tool>
-            <Tool title="iTerm2">
-              I’m honestly not even sure what features I get with this that
-              aren’t just part of the macOS Terminal but it’s what I use.
+            <Tool title="Fish">
+              I have been using Fish for over a year now. I have tried Zsh and
+              Bash but I always come back to Fish. It is just too good. It’s
+              simple, fast and easy to use. I was skeptical initially about
+              leaving bash language but I am glad I did. Fish’s ecosystem is
+              extremely strong and rich with packages.
             </Tool>
-            <Tool title="TablePlus">
-              Great software for working with databases. Has saved me from
-              building about a thousand admin interfaces for my various projects
-              over the years.
+            <Tool title="GitHub cli tool">
+              The GitHub CLI is an incredibly underrated productivity tool. I
+              use it for everything from creating new repos to opening issues
+              and pull requests. It’s a great way to stay in the terminal and
+              still be able to do all of the things I need to do on GitHub.
             </Tool>
           </ToolsSection>
           <ToolsSection title="Design">
@@ -90,25 +90,16 @@ export default function Uses() {
             </Tool>
           </ToolsSection>
           <ToolsSection title="Productivity">
-            <Tool title="Alfred">
-              It’s not the newest kid on the block but it’s still the fastest.
-              The Sublime Text of the application launcher world.
+            <Tool title="Microsoft Todo">
+              It just works. Very very simple. Works across multiple devices so
+              I can do research on my phone, I can create tasks on their app and
+              their widget is great. I work with Trello for work but for my
+              personal projects I use Microsoft Todo.
             </Tool>
-            <Tool title="Reflect">
-              Using a daily notes system instead of trying to keep things
-              organized by topics has been super powerful for me. And with
-              Reflect, it’s still easy for me to keep all of that stuff
-              discoverable by topic even though all of my writing happens in the
-              daily note.
-            </Tool>
-            <Tool title="SavvyCal">
-              Great tool for scheduling meetings while protecting my calendar
-              and making sure I still have lots of time for deep work during the
-              week.
-            </Tool>
-            <Tool title="Focus">
-              Simple tool for blocking distracting websites when I need to just
-              do the work and get some momentum going.
+            =
+            <Tool title="Spotify">
+              Good music is a must for me to be productive. I listen to Guitar
+              LoFi music. It helps me focus and get into the zone.
             </Tool>
           </ToolsSection>
         </div>
