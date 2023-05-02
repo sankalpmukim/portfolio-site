@@ -14,7 +14,6 @@
     "@mapbox/rehype-prism": "^0.8.0",
     "@mdx-js/loader": "^2.1.2",
     "@next/mdx": "^12.2.3",
-    "@tailwindcss/typography": "^0.5.4",
     "@vercel/analytics": "^0.1.10",
     "autoprefixer": "^10.4.12",
     "clsx": "^1.2.1",
@@ -30,7 +29,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.2.3",
-    "@types/tailwindcss__typography": "^0.5.6",
+    "@tailwindcss/typography": "^0.5.9",
     "eslint": "8.19.0",
     "eslint-config-next": "^13.2.1",
     "prettier": "^2.7.1",
