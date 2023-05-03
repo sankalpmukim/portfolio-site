@@ -154,7 +154,7 @@ function Resume() {
       company: 'Indiahikes',
       title: 'Full Stack Engineer',
       logo: logoIndiahikes,
-      start: 'September 2022',
+      start: 'October 2022',
       end: 'January 2023',
     },
     {
