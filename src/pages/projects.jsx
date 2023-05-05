@@ -2,11 +2,10 @@ import { Card } from '@/components/Card'
 import Head from 'next/head'
 import Image from 'next/image'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
+import logoClipboard from '@/images/logos/animaginary.svg'
+import logoNumpuz from '@/images/logos/numpuz.svg'
+import logoVitWifiConnect from '@/images/logos/vitWifiLogin.png'
+import logoCourtHero from '@/images/logos/courtHero.ico'
 
 const projects = [
   {
@@ -17,7 +16,7 @@ const projects = [
       href: 'https://numpuz.sankalpmukim.dev',
       label: 'numpuz.sankalpmukim.dev',
     },
-    logo: logoPlanetaria,
+    logo: logoNumpuz,
   },
   {
     name: 'Shared Clipboard',
@@ -27,28 +26,27 @@ const projects = [
       href: 'https://clip.sankalpmukim.dev',
       label: 'clip.sankalpmukim.dev',
     },
-    logo: logoAnimaginary,
+    logo: logoClipboard,
   },
   {
-    name: 'HelioStream',
+    name: 'VIT WiFi Connect',
     description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream,
+      "Android App that helps student connect to VIT WiFi in a single click. Helps avoid VIT's Clunky WiFi website.",
+    link: {
+      href: 'https://play.google.com/store/apps/details?id=com.sankalpmukim.vitwifilogin',
+      label: 'Google Play Store',
+    },
+    logo: logoVitWifiConnect,
   },
   {
-    name: 'cosmOS',
+    name: 'Court Hero',
     description:
-      'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoCosmos,
-  },
-  {
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle,
+      'An IOT based solution to help students find out the state of the badminton court remotely. Built using Raspberry Pi, NextJS and Firebase.',
+    link: {
+      href: 'https://github.com/court-hero-frontend',
+      label: 'github.com',
+    },
+    logo: logoCourtHero,
   },
 ]
 
@@ -87,7 +85,7 @@ export default function Projects() {
                 <Image
                   src={project.logo}
                   alt=""
-                  className="h-8 w-8"
+                  className="h-8 w-8 rounded-full bg-white"
                   unoptimized
                 />
               </div>
