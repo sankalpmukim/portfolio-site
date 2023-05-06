@@ -124,9 +124,9 @@ function MobileNavigation(props) {
                 <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/articles">Articles</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
-                <MobileNavItem href="/certifications">
+                {/* <MobileNavItem href="/certifications">
                   Certifications
-                </MobileNavItem>
+                </MobileNavItem> */}
                 <MobileNavItem href="/uses">Uses</MobileNavItem>
               </ul>
             </nav>
@@ -161,13 +161,15 @@ function NavItem({ href, children }) {
 }
 
 function DesktopNavigation(props) {
+  const isHomePage = useRouter().pathname === '/'
   return (
     <nav {...props}>
       <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+        {!isHomePage && <NavItem href="/">Home</NavItem>}
         <NavItem href="/about">About</NavItem>
         <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/certifications">Certifications</NavItem>
+        {/* <NavItem href="/certifications">Certifications</NavItem> */}
         <NavItem href="/uses">Uses</NavItem>
       </ul>
     </nav>
