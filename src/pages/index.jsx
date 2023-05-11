@@ -25,7 +25,6 @@ import image5 from '@/images/photos/image-5.jpg'
 import logoIndiahikes from '@/images/logos/indiahikes.jpeg'
 import logoIotReady from '@/images/logos/iotReady.jpeg'
 import logoNorthOfZero from '@/images/logos/northOfZero.jpeg'
-import logoStarbucks from '@/images/logos/starbucks.svg'
 
 function MailIcon(props) {
   return (
