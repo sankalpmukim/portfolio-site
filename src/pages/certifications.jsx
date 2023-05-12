@@ -28,7 +28,7 @@ export default function Certifications() {
   return (
     <>
       <Head>
-        <title>Certifications - Sankalp Mukim</title>
+        <title>Certifications</title>
         <meta
           name="description"
           content="I’ve spoken at events all around the world and been interviewed for many podcasts."
