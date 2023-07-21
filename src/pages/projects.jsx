@@ -43,8 +43,8 @@ const projects = [
     description:
       'An IOT based solution to help students find out the state of the badminton court remotely. Built using Raspberry Pi, NextJS and Firebase.',
     link: {
-      href: 'https://github.com/court-hero-frontend',
-      label: 'github.com',
+      href: 'https://courthero.sankalpmukim.dev',
+      label: 'Court Hero Frontend',
     },
     logo: logoCourtHero,
   },
