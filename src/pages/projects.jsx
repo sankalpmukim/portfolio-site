@@ -11,7 +11,7 @@ const projects = [
   {
     name: 'Numpuz',
     description:
-      'Creating technology to empower civilians to explore space on their own terms.',
+      'A multiplayer UI intensive interactive puzzle based game. Built using ReactJS with a Realtime leaderboard.',
     link: {
       href: 'https://numpuz.sankalpmukim.dev',
       label: 'numpuz.sankalpmukim.dev',
