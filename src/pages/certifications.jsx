@@ -11,15 +11,14 @@ function CertificationsSection({ children, ...props }) {
   )
 }
 
-function Appearance({ title, description, event, cta, href }) {
+function Appearance({ title, description, provider, href }) {
   return (
     <Card as="article">
       <Card.Title as="h3" href={href}>
         {title}
       </Card.Title>
-      <Card.Eyebrow decorate>{event}</Card.Eyebrow>
+      <Card.Eyebrow decorate>{provider}</Card.Eyebrow>
       <Card.Description>{description}</Card.Description>
-      <Card.Cta>{cta}</Card.Cta>
     </Card>
   )
 }
@@ -39,43 +38,26 @@ export default function Certifications() {
         intro="One of my favorite ways to share my ideas is live on stage, where there’s so much more communication bandwidth than there is in writing, and I love podcast interviews because they give me the opportunity to answer questions instead of just present my opinions."
       >
         <div className="space-y-20">
-          <CertificationsSection title="Conferences">
+          <CertificationsSection title="Cloud">
             <Appearance
-              href="#"
-              title="In space, no one can watch you stream — until now"
-              description="A technical deep-dive into HelioStream, the real-time streaming library I wrote for transmitting live video back to Earth."
-              event="SysConf 2021"
-              cta="Watch video"
-            />
-            <Appearance
-              href="#"
-              title="Lessons learned from our first product recall"
-              description="They say that if you’re not embarassed by your first version, you’re doing it wrong. Well when you’re selling DIY space shuttle kits it turns out it’s a bit more complicated."
-              event="Business of Startups 2020"
-              cta="Watch video"
+              href="/certifications/saa-c03.pdf"
+              title="AWS Solutions Architect Associate"
+              description="The AWS Certified Solutions Architect – Associate examination is intended for individuals who perform a solutions architect role and have one or more years of hands-on experience designing available, cost-efficient, fault-tolerant, and scalable distributed systems on AWS."
+              provider="AWS"
             />
           </CertificationsSection>
-          <CertificationsSection title="Podcasts">
+          <CertificationsSection title="Theoretical">
             <Appearance
-              href="#"
-              title="Using design as a competitive advantage"
-              description="How we used world-class visual design to attract a great team, win over customers, and get more press for Planetaria."
-              event="Encoding Design, July 2022"
-              cta="Listen to podcast"
+              href="/certifications/udemy-networking.pdf"
+              title="Fundamentals of Network "
+              description="Understanding the first principles of networking to build low latency and high throughput backends"
+              provider="Hussein Nasser(Udemy)"
             />
             <Appearance
-              href="#"
-              title="Bootstrapping an aerospace company to $17M ARR"
-              description="The story of how we built one of the most promising space startups in the world without taking any capital from investors."
-              event="The Escape Velocity Show, March 2022"
-              cta="Listen to podcast"
-            />
-            <Appearance
-              href="#"
-              title="Programming your company operating system"
-              description="On the importance of creating systems and processes for running your business so that everyone on the team knows how to make the right decision no matter the situation."
-              event="How They Work Radio, September 2021"
-              cta="Listen to podcast"
+              href="/certifications/udemy-nginx.pdf"
+              title="Nginx Fundamentals"
+              description="Understand and Deploy Layer 4/Layer 7 Load Balancing, WebSockets, HTTPS, HTTP/2, TLS 1.3 with NGINX (With Docker)"
+              provider="Hussein Nasser(Udemy)"
             />
           </CertificationsSection>
         </div>
