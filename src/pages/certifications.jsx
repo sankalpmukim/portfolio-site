@@ -49,7 +49,7 @@ export default function Certifications() {
           <CertificationsSection title="Theoretical">
             <Appearance
               href="/certifications/udemy-networking.pdf"
-              title="Fundamentals of Network "
+              title="Fundamentals of Networking"
               description="Understanding the first principles of networking to build low latency and high throughput backends"
               provider="Hussein Nasser(Udemy)"
             />
