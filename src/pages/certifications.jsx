@@ -27,15 +27,12 @@ export default function Certifications() {
   return (
     <>
       <Head>
-        <title>Certifications</title>
-        <meta
-          name="description"
-          content="I’ve spoken at events all around the world and been interviewed for many podcasts."
-        />
+        <title>Certifications & Accreditations</title>
+        <meta name="description" content="" />
       </Head>
       <SimpleLayout
-        title="I’ve spoken at events all around the world and been interviewed for many podcasts."
-        intro="One of my favorite ways to share my ideas is live on stage, where there’s so much more communication bandwidth than there is in writing, and I love podcast interviews because they give me the opportunity to answer questions instead of just present my opinions."
+        title="Certifications & Accreditations"
+        intro="An overview of the professional certifications and accreditations I've earned in the field of software engineering. Each of these endorsements represents a step in my continuous pursuit of excellence, reflecting my dedication to staying current with the latest technologies and methodologies."
       >
         <div className="space-y-20">
           <CertificationsSection title="Cloud">
