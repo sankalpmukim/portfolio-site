@@ -27,7 +27,7 @@ export default function Certifications() {
   return (
     <>
       <Head>
-        <title>Certifications & Accreditations</title>
+        <title>Certifications - Sankalp Mukim</title>
         <meta name="description" content="" />
       </Head>
       <SimpleLayout
