@@ -12,6 +12,10 @@ export default function MillionDollarTechStack(props) {
   return <ArticleLayout meta={meta} {...props} />
 }
 
+## Introduction
+
+Choosing the right tech stack for your project is crucial for its success. In 2023, a tech stack that prioritizes type safety and leverages TypeScript for both frontend and backend development can provide numerous benefits. This article will focus on the best tech stack for 2023, incorporating TypeScript for frontend and backend, and utilizing React technologies on the frontend. Additionally, we will explore the "Bleed responsibly" mentality, which emphasizes using bleeding-edge technology after it has been battle-tested and proven reliable for production at scale.
+
 So in this article, I will write about the Ideal tech stack for startups in 2023. This article is useful for people looking planning tech for their startups, new developers looking for technologies to learn, and people who are interested in the future of technology.
 
 My focus in deciding these technologies is on the following points:
@@ -21,116 +25,67 @@ My focus in deciding these technologies is on the following points:
 - It should be fairly modern(not ancient) but not bleeding edge(not battle tested).
 - Developer friendly.
 - Requires less code to accomplish more. (Less code is better)
-- The Complete Stack - from development to deployment to monitoring.
 
 I plan to evaluate multiple options for each preference and then choose the best one. I will also try to explain why I chose that particular technology.
 
-## Inspiration
+## The Tech Stack: TypeScript and React
 
-This article has a lot of decisions that were originally inspired by the [T3 Stack](https://create.t3.gg) that was started by Theo ([@t3dotgg](https://twitter.com/t3dotgg)) and his community at Twitch. I've made some changes, and provided a few alternatives as well as covered extra topics.
+1. TypeScript: TypeScript is a statically typed superset of JavaScript that provides excellent type safety. It has gained significant adoption in the professional world and is widely used in the React community. TypeScript helps detect problems with code while writing it, reducing the chances of introducing bugs. It offers advanced type checking and tooling support, making it an ideal choice for ensuring type safety in both frontend and backend development.
 
-## Typescript - The programming language
+2. React: React is a popular JavaScript library for building user interfaces. It follows a component-based architecture, making it easy to build reusable UI components. React offers a virtual DOM, which enhances performance by efficiently updating only the necessary parts of the UI. It has a large and active community, providing extensive support, libraries, and tools. React is widely adopted in the industry and offers excellent performance, scalability, and maintainability.
 
-Going with typescript is a no brainer choice. Have been using typescript professionally for over 2 years now. It is a superset of javascript and adds types to javascript. Typescript is a great language and it is a must have for any serious project.
+## Bleed Responsibly mentality
 
-- Has amazing tooling so makes development faster.
-- Lets developers tackle errors before they go to production.
-- With focus on _fast MVP development_, typescript can be used for both the frontend and the backend and a small development team.
+The "Bleed responsibly" mentality refers to using bleeding-edge technologies but only after they have been battle-tested and proven reliable for production at scale. While it is tempting to adopt the latest technologies, it is essential to consider their stability, maturity, and community support. By adopting a "Bleed responsibly" approach, you can benefit from the advantages of cutting-edge technologies while minimizing the risks associated with early adoption.
 
-### Other notable options
+## Best Tech Stack for 2023
 
-<details>
-<summary>Javascript</summary>
+Based on the research, the best tech stack for 2023, focusing on type safety and React technologies, includes:
 
-If a developer prefers javascript over typescript and they already know javascript really well, they should really consider trying typescript because for most developers, it is a better language. But if they are not willing to learn typescript, they can go with javascript.
+1. MERN Stack: The MERN stack (MongoDB, Express, React, Node.js) is a popular choice for full-stack JavaScript development. It combines MongoDB as the database, Express.js as the backend framework, React for the frontend, and Node.js as the runtime environment. Integrating TypeScript into the MERN stack ensures type safety throughout the development process.
 
-</details>
+2. TypeScript + Next.js: Next.js is a popular React framework that provides server-side rendering, static site generation, and other advanced features. Combining TypeScript with Next.js allows for type-safe development and enhanced productivity. Next.js provides excellent performance and scalability, making it suitable for large-scale production applications.
 
-<details>
-<summary>Wordpress</summary>
+3. TypeScript + Nest.js: Nest.js is a progressive Node.js framework that leverages TypeScript to build efficient and scalable server-side applications. It follows the architectural principles of Angular, making it familiar to Angular developers. Nest.js offers strong typing and dependency injection, ensuring type safety and maintainability in backend development.
 
-Wordpress is a great option for a startup. It is easy to use and has a lot of plugins. It is also very easy to deploy and maintain. But it is not a great option for a startup that wants to scale. Wordpress is not very performant and it is not very developer friendly. It is also not very secure.
+## Type Safe ORMs for Backend Development: Prisma and Drizzle ORM
 
-It is a great option for a small startup that wants to get a quick MVP out. Later on they can migrate to a more performant and secure stack.
+### Drizzle ORM
 
-</details>
+Drizzle ORM is an emerging TypeScript ORM tool that offers several advantages over Prisma [blog.logrocket.com](https://blog.logrocket.com/getting-started-drizzle-type-safe-orm/). While Prisma is known for its type safety and easy-to-use API, Drizzle offers a more flexible and extensible solution, especially when handling complex queries with multiple JOINs. The main philosophy behind Drizzle is that if you know SQL, you know Drizzle.
 
-<details>
-<summary>Django or Ruby on Rails</summary>
+Drizzle is designed with maximum type safety in mind and is meant to be a library, not a framework. It stays as an opt-in solution all the time at any levels [finddev.tools](https://finddev.tools/compare/drizzle-orm/vs/prisma). At the time of writing, Drizzle is still very new, so there is much to be desired. However, it is already usable in a production environment for several relational databases. If you're familiar with any notable databases like MySQL or Postgres, you can use Drizzle confidently [blog.logrocket.com](https://blog.logrocket.com/getting-started-drizzle-type-safe-orm/).
 
-These are good complete MVC frameworks that help developers build web applications quickly. They are very developer friendly and are very developer friendly with a huge comminity. They are also very secure and performant. But they are not very modern and they are not very fast.
+### Prisma
 
-With both of them, you get restricted on getting a very impressive frontend that has high requirements for interactivity. You will need to pair it with an external solution for frontend. More on it in frameworks section.
+Prisma is an open-source, next-generation ORM that is auto-generated and type-safe, making it a powerful tool for both TypeScript and Node.js applications blog.logrocket.com. It allows developers to easily manage and interact with their database. Prisma has a significant community of open-source contributors and maintainers, which ensures continuous improvement and support.
 
-</details>
+Prisma's unique design enables it to provide an unparalleled level of type safety among TypeScript ORMs. It generates a local CRUD client that encodes your data model, thus offering accurate typings for nested relation queries and partial queries that modify the shape of returned models prisma.io.
 
-## NextJS - The fullstack framework
+Moreover, Prisma works fundamentally differently compared to traditional ORMs. With Prisma, you define your models in the declarative Prisma schema, which serves as the single source of truth for your database schema and the models in your programming language. In your application code, you can then use Prisma Client to read and write data in your database in a type-safe manner without the overhead of managing complex model instances prisma.io.
 
-NextJS is a great framework for building fullstack web applications. It is a React framework that has a lot of features that make it a great choice for a startup.
+Both Prisma and Drizzle ORM are strong choices for backend development with TypeScript due to their focus on type safety. Prisma's unique design and strong community support make it a reliable choice. At the same time, Drizzle's flexibility and extensibility make it a strong contender, especially for developers familiar with SQL. It's important to evaluate the specific needs of your project when choosing between these ORMs.
 
-- It is great for a single developer/ small team to develop both the frontend and the backend.
-- It is amazing for SEO.
-- It uses React under the hood, so it has a huge community to help debug.
-- If you don't prefer React, you can use similar frameworks like Nuxt or SvelteKit.
+## Advantages of React Native for Startups to Build a Quick MVP for Mobile Devices at Low Cost
 
-### Other notable options
+In the fast-paced startup world, building a Minimum Viable Product (MVP) is a crucial step to validate ideas, attract investors, and gather user feedback. Startups often face challenges such as limited resources, tight timelines, and the need to target multiple platforms. This is where React Native, a cross-platform framework, comes to the rescue. In this article, we will explore the advantages of using React Native to build a quick MVP for mobile devices at a low cost.
 
-<details>
-<summary>Django</summary>
+### Cost-Effectiveness
 
-Django is a powerful Full Stack framework used mostly for it's backend capabilities in the real world but has great routing and MVC structure. If your developer that knows python really well, this is a great choice.
+One of the key advantages of React Native is its ability to significantly reduce development costs. With React Native, startups can leverage a single codebase to build mobile applications that work seamlessly on both iOS and Android platforms. This eliminates the need to maintain separate development teams for each platform, saving time, effort, and resources. By investing in a talented React Native development team, startups can build cost-effective MVPs without compromising on the quality and functionality of their app.
 
-Frontend needs to be handled separately with more effort because it's templating language is very lacking.
+### Rapid Development
 
-</details>
+When it comes to building an MVP quickly, React Native shines with its efficiency and speed. The framework offers a hot-reloading feature, allowing developers to see the changes made in the code immediately without having to recompile the entire app. This reduces development time and enables fast iteration, making it easier to test and implement new features. Startups can gather user feedback early in the development process and make necessary adjustments, leading to a more refined and user-centric product.
 
-<details>
-<summary>Ruby on Rails</summary>
+### Native-Like Performance
 
-Ruby on Rails is one of the old but gold framework options. It was the first option in this category that really set the standard for others.
+While React Native is a cross-platform framework, it doesn't sacrifice native-like performance. React Native uses native components, ensuring that the app looks and feels like a native application on each platform. It leverages the device's GPU (Graphics Processing Unit) to render components, resulting in smooth and responsive user interfaces. This performance advantage is crucial for startups as it enhances the user experience and increases the chances of user adoption.
 
-Frontend needs to be handled separately with more effort because it doesn't have enough tools to facilitate developing a fairly interactive application.
+### Cross-Platform Compatibility
 
-</details>
+Targeting multiple platforms can be time-consuming and costly for startups. React Native offers a solution by enabling developers to write a single codebase that can be used to develop apps for both iOS and Android platforms. This cross-platform compatibility eliminates the need for duplicate development efforts, allowing startups to reach a wider audience with a single codebase. By targeting both major mobile platforms simultaneously, startups can maximize their user reach and market potential.
 
-<details>
-<summary>Django</summary>
+### Expansive Ecosystem
 
-Django is a powerful Full Stack framework used mostly for it's backend capabilities
-in the real world but has great routing and MVC structure.
-
-</details>
-
-## Prisma + Postgres - The Database
-
-Prisma is currently my favourite ORM for Typescript. It has the best typescript integration and a powerful Schema Service. It is extremely mature now at it's 4.0 version. It is also very developer friendly and has a lot of features that make it a great choice for fast features iteration.
-
-Postgres is the world's most scalable Relational DB. I care about having a reliable choice that supports transactions and has a lot of features. Postgres is a great choice for that. Because of being so mature, it has a lot of tools and plugins that make it a great choice for a startup. There is third party options that make it easy to deploy and manage (like Cockroach DB).
-
-## Supabase - Authentication, Storage, and more
-
-Supabase is an extremely underrated powerful open source technology. It is a complete backend solution for startups. It has a lot of features that make it a great choice for a startup. For our use case, we will be using it for authentication, storage. It also has a phenomenal NoSQL database service that is in front of a postgres server, but we will consider other options for the database.
-
-I love using supabase for Authentication primarily. I don't have to worry about setting up a database and writing code for authentication. I just have to use the supabase client and I am done. It is also very secure and has a lot of features like 2FA, email verification, etc. It is available for mobile as well as web. It supports a huge list of providers like Google, Facebook, Github, Twitter, etc.
-
-Supabase also has a storage service that is very easy to use. It is very simple to use and comes feature packed with the Supabase client.
-
-## Tanstack Query
-
-It is an awesome modern tool that has the best client side API for asynchronous state management for frontend frameworks. It is extremely typesafe, and contains a layer for client side caching. With an elegant API, you can control all options related to caching and fetching and automatically handle loading and error states.
-
-## TRPC
-
-Trpc is a tool that forms a typesafe bridge between the server and the client with minimal developer effort and snappy DX. It is a one time setup effort that can work well between any two typescript codebases.
-
-## Rate limiting
-
-Now we are getting slightly outside the pure core features development and into concerns for scalable applications. My favourite tools for scalable rate checking protections currently is Upstash with Redis. They have a great SDK that works for most tools.
-
-## Axiom
-
-Axiom is a logging tool that can ingenst petabytes of data and provide useful insight. A good logs infrastructure is crucial to build and deliver a reliable error free app to your users.
-
-## Netlify / Vercel
-
-I believe that the best way to deploy a web application is to use a serverless architecture. It is a great way to scale and it is also very cost effective. Netlify and Vercel are the best options for this. They are both very developer friendly and have a lot of features that make it a great choice for a startup. They have CLI tools that make it easy to deploy and manage.
+React Native benefits from a vibrant ecosystem with a vast collection of third-party libraries, plugins, and packages. These resources provide ready-made solutions to common functionalities, allowing startups to save development time and effort. With a strong community support and regular updates, startups can leverage the ecosystem to quickly add features and scale their MVPs without reinventing the wheel.
