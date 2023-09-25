@@ -1,6 +1,8 @@
 import '@/styles/tailwind.css'
 import 'focus-visible'
 
+import Script from 'next/script'
+
 import { useEffect, useRef } from 'react'
 
 import { Analytics } from '@vercel/analytics/react'
@@ -22,6 +24,7 @@ export default function App({ Component, pageProps, router }) {
 
   return (
     <>
+      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
       <div className="fixed inset-0 flex justify-center sm:px-8">
         <div className="flex w-full max-w-7xl lg:px-8">
           <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
@@ -35,6 +38,14 @@ export default function App({ Component, pageProps, router }) {
         <Footer />
       </div>
       <Analytics />
+      <noscript>
+        {/* eslint-disable @next/next/no-img-element */}
+        <img
+          src="https://queue.simpleanalyticscdn.com/noscript.gif"
+          alt=""
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </noscript>
     </>
   )
 }
