@@ -2,6 +2,7 @@ import { Card } from '@/components/Card'
 import Head from 'next/head'
 import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'
+import * as CONSTANTS from '@/lib/constants'
 
 function CertificationsSection({ children, ...props }) {
   return (
@@ -28,7 +29,7 @@ export default function Certifications() {
     <>
       <Head>
         <title>Certifications - Sankalp Mukim</title>
-        <meta name="description" content="" />
+        <meta name="description" content={CONSTANTS.INTRO} />
       </Head>
       <SimpleLayout
         title="Certifications & Accreditations"
