@@ -25,6 +25,8 @@ import image5 from '@/images/photos/image-5.jpg'
 import logoIndiahikes from '@/images/logos/indiahikes.jpeg'
 import logoIotReady from '@/images/logos/iotReady.jpeg'
 import logoNorthOfZero from '@/images/logos/northOfZero.jpeg'
+import logoION from '@/images/logos/iongroup_logo.jpeg'
+import logoStreak from '@/images/logos/streakcard_logo.jpeg'
 
 function MailIcon(props) {
   return (
@@ -140,14 +142,28 @@ function Newsletter() {
 function Resume() {
   let resumes = [
     {
-      company: 'North of Zero',
-      title: 'Backend Developer',
-      logo: logoNorthOfZero,
-      start: 'June 2023',
+      company: 'ION',
+      title: 'Software Engineer',
+      logo: logoION,
+      start: 'January 2024',
       end: {
         label: 'Present',
         dateTime: new Date().getFullYear(),
       },
+    },
+    {
+      company: 'Streak (YC W22)',
+      title: 'Software Engineer',
+      logo: logoStreak,
+      start: 'October 2023',
+      end: 'November 2023',
+    },
+    {
+      company: 'North of Zero',
+      title: 'Backend Developer',
+      logo: logoNorthOfZero,
+      start: 'June 2023',
+      end: 'August 2023',
     },
     {
       company: 'Indiahikes',
