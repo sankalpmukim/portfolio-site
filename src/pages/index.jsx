@@ -27,6 +27,7 @@ import logoIotReady from '@/images/logos/iotReady.jpeg'
 import logoNorthOfZero from '@/images/logos/northOfZero.jpeg'
 import logoION from '@/images/logos/iongroup_logo.jpeg'
 import logoStreak from '@/images/logos/streakcard_logo.jpeg'
+import logoIbm from '@/images/logos/IBM.png'
 
 function MailIcon(props) {
   return (
@@ -142,14 +143,21 @@ function Newsletter() {
 function Resume() {
   let resumes = [
     {
-      company: 'ION',
+      company: 'IBM',
       title: 'Software Engineer',
-      logo: logoION,
-      start: 'January 2024',
+      logo: logoIbm,
+      start: 'March 2025',
       end: {
         label: 'Present',
         dateTime: new Date().getFullYear(),
       },
+    },
+    {
+      company: 'ION',
+      title: 'Software Engineer',
+      logo: logoION,
+      start: 'January 2024',
+      end: 'March 2025',
     },
     {
       company: 'Streak (YC W22)',
@@ -212,9 +220,8 @@ function Resume() {
               {/* ml-auto  */}
               <dd
                 className="text-xs text-zinc-400 dark:text-zinc-500"
-                aria-label={`${role.start.label ?? role.start} until ${
-                  role.end.label ?? role.end
-                }`}
+                aria-label={`${role.start.label ?? role.start} until ${role.end.label ?? role.end
+                  }`}
               >
                 <time dateTime={role.start.dateTime ?? role.start}>
                   {role.start.label ?? role.start}
