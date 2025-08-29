@@ -1,0 +1,104 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SimpleLayout from "../../components/SimpleLayout.astro";
+import Card from "../../components/Card.astro";
+import CardTitle from "../../components/CardTitle.astro";
+import CardDescription from "../../components/CardDescription.astro";
+import CardCta from "../../components/CardCta.astro";
+import CardEyebrow from "../../components/CardEyebrow.astro";
+
+function formatDate(dateString) {
+  return new Date(`${dateString}T00:00:00Z`).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
+const articles = [
+  {
+    slug: 'concurrency_control_guide',
+    title: 'Advanced Concurrency Control in Node.js and TypeScript',
+    date: '2025-07-08',
+    description: 'An article that takes you through the entire journey of implementing advanced concurrency control in Node.js and TypeScript.'
+  },
+  {
+    slug: 'casing-matters',
+    title: 'Casing Matters',
+    date: '2025-07-07', 
+    description: 'A comprehensive guide on different casing conventions in programming and when to use them.'
+  },
+  {
+    slug: 'adapter_pattern_article',
+    title: 'The Adapter Pattern',
+    date: '2025-07-06',
+    description: 'Understanding the Adapter design pattern with practical examples and implementation.'
+  },
+  {
+    slug: 'horizontally-scaling-realtime-applications',
+    title: 'Horizontally Scaling Realtime Applications',
+    date: '2025-07-05',
+    description: 'Learn how to scale real-time applications across multiple servers and handle millions of concurrent connections.'
+  },
+  {
+    slug: 'aspiring-pilots-journal',
+    title: 'Aspiring Pilots Journal',
+    date: '2025-07-04',
+    description: 'A personal journey into aviation and the lessons learned from pursuing flight training.'
+  },
+  {
+    slug: 'aws-accounts-manager',
+    title: 'AWS Accounts Manager',
+    date: '2025-07-03',
+    description: 'Building a comprehensive tool to manage multiple AWS accounts and resources efficiently.'
+  },
+  {
+    slug: 'million-dolllar-tech-stack',
+    title: 'Million Dollar Tech Stack',
+    date: '2025-07-02',
+    description: 'Exploring the technology stack that powers million-dollar companies and startups.'
+  }
+];
+---
+
+<Layout 
+  title="Articles - Sankalp Mukim" 
+  description="All of my long-form thoughts on programming, leadership, product design, and more, collected in chronological order."
+>
+  <SimpleLayout
+    title="Writing on software design, company building, and the aerospace industry."
+    intro="All of my long-form thoughts on programming, leadership, product design, and more, collected in chronological order."
+  >
+    <div class="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
+      <div class="flex max-w-3xl flex-col space-y-16">
+        {articles.map((article) => (
+          <article class="md:grid md:grid-cols-4 md:items-baseline">
+            <Card class="md:col-span-3">
+              <CardTitle href={`/articles/${article.slug}`}>
+                {article.title}
+              </CardTitle>
+              <CardEyebrow
+                as="time"
+                dateTime={article.date}
+                class="md:hidden"
+                decorate
+              >
+                {formatDate(article.date)}
+              </CardEyebrow>
+              <CardDescription>{article.description}</CardDescription>
+              <CardCta>Read article</CardCta>
+            </Card>
+            <CardEyebrow
+              as="time"
+              dateTime={article.date}
+              class="mt-1 hidden md:block"
+            >
+              {formatDate(article.date)}
+            </CardEyebrow>
+          </article>
+        ))}
+      </div>
+    </div>
+  </SimpleLayout>
+</Layout>

@@ -1,1 +1,102 @@
 @import "tailwindcss";
+
+@layer base {
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 2px solid theme(colors.teal.500);
+    outline-offset: 2px;
+  }
+
+  /* Dark mode script - runs before page loads to prevent flash */
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Typography base styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-zinc-800 dark:text-zinc-100;
+  }
+
+  /* Prose styles for blog content */
+  .prose {
+    @apply text-zinc-600 dark:text-zinc-400;
+  }
+
+  .prose h2, .prose h3 {
+    @apply text-zinc-800 dark:text-zinc-100;
+  }
+
+  .prose a {
+    @apply text-teal-500 hover:text-teal-600 dark:text-teal-400 dark:hover:text-teal-300;
+    @apply font-semibold no-underline;
+    @apply transition-colors duration-150;
+  }
+
+  .prose code {
+    @apply bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded text-sm;
+    @apply text-zinc-800 dark:text-zinc-200;
+  }
+
+  .prose pre {
+    @apply bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-4 overflow-x-auto;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0 text-zinc-100;
+  }
+
+  .prose blockquote {
+    @apply border-l-2 border-zinc-200 dark:border-zinc-700 pl-6 italic;
+  }
+
+  .prose img {
+    @apply rounded-2xl;
+  }
+
+  .prose hr {
+    @apply border-zinc-100 dark:border-zinc-700;
+  }
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* Photo rotation classes for homepage gallery */
+.rotate-2 {
+  transform: rotate(2deg);
+}
+
+.-rotate-2 {
+  transform: rotate(-2deg);
+}
+
+/* Backdrop blur support */
+.backdrop-blur {
+  backdrop-filter: blur(16px);
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+/* Focus ring utilities */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900;
+}

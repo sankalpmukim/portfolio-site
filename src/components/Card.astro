@@ -1,0 +1,54 @@
+---
+export interface Props {
+  as?: string;
+  class?: string;
+}
+
+const { as: Component = 'div', class: className, ...props } = Astro.props;
+---
+
+<Component 
+  class={`group relative flex flex-col items-start ${className || ''}`}
+  {...props}
+>
+  <slot />
+</Component>
+
+<!-- Card.Link Component -->
+<script>
+  // We'll handle the card link styling with CSS since Astro doesn't have compound components like React
+</script>
+
+<style>
+  /* Card link hover effects */
+  .card-link {
+    position: relative;
+  }
+
+  .card-link::before {
+    content: '';
+    position: absolute;
+    inset: -1.5rem -1rem;
+    z-index: 0;
+    scale: 0.95;
+    background-color: rgb(250 250 250 / 1);
+    opacity: 0;
+    transition: all 0.2s ease;
+    border-radius: 1rem;
+  }
+
+  .dark .card-link::before {
+    background-color: rgb(39 39 42 / 0.5);
+  }
+
+  .card-link:hover::before {
+    scale: 1;
+    opacity: 1;
+  }
+
+  @media (min-width: 640px) {
+    .card-link::before {
+      inset: -1.5rem -1.5rem;
+    }
+  }
+</style>

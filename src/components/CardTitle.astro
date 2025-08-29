@@ -1,0 +1,25 @@
+---
+export interface Props {
+  as?: string;
+  href?: string;
+  class?: string;
+}
+
+const { as: Component = 'h2', href, class: className, ...props } = Astro.props;
+---
+
+<Component 
+  class={`text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 ${className || ''}`}
+  {...props}
+>
+  {href ? (
+    <a href={href} class="card-link">
+      <span class="absolute -inset-y-6 -inset-x-4 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+      <span class="relative z-10">
+        <slot />
+      </span>
+    </a>
+  ) : (
+    <slot />
+  )}
+</Component>

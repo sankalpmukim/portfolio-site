@@ -1,0 +1,317 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Container from "../../components/Container.astro";
+
+const meta = {
+  author: 'Sankalp Mukim',
+  date: '2025-07-08',
+  title: 'Advanced Concurrency Control in Node.js and TypeScript',
+  description: 'An article that takes you through the entire journey of implementing advanced concurrency control in Node.js and TypeScript.'
+};
+
+function formatDate(dateString) {
+  return new Date(`${dateString}T00:00:00Z`).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+---
+
+<Layout title={`${meta.title} - Sankalp Mukim`} description={meta.description}>
+  <Container class="mt-16 lg:mt-32">
+    <div class="xl:relative">
+      <div class="mx-auto max-w-2xl">
+        <button
+          type="button"
+          onclick="history.back()"
+          aria-label="Go back to articles"
+          class="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 transition dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20 lg:absolute lg:-left-5 lg:mb-0 lg:-mt-2 xl:-top-1.5 xl:left-0 xl:mt-0"
+        >
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="h-4 w-4 stroke-zinc-500 transition group-hover:stroke-zinc-700 dark:stroke-zinc-500 dark:group-hover:stroke-zinc-400">
+            <path d="M7.25 11.25 3.75 8m0 0 3.5-3.25M3.75 8h8.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <article>
+          <header class="flex flex-col">
+            <h1 class="mt-6 text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
+              {meta.title}
+            </h1>
+            <time
+              datetime={meta.date}
+              class="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"
+            >
+              <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
+              <span class="ml-3">{formatDate(meta.date)}</span>
+            </time>
+          </header>
+          <div class="mt-8 prose dark:prose-invert">
+            <p>
+              When processing large numbers of files, API calls, or other asynchronous operations, controlling concurrency becomes crucial for performance and resource management. This guide explores how to build sophisticated concurrency control systems that can adapt to changing conditions at runtime.
+            </p>
+
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#understanding-the-problem">Understanding the Problem</a></li>
+              <li><a href="#building-a-basic-async-file-iterator">Building a Basic Async File Iterator</a></li>
+              <li><a href="#implementing-fixed-concurrency-control">Implementing Fixed Concurrency Control</a></li>
+              <li><a href="#creating-dynamic-concurrency-control">Creating Dynamic Concurrency Control</a></li>
+              <li><a href="#advanced-patterns-and-best-practices">Advanced Patterns and Best Practices</a></li>
+              <li><a href="#real-world-applications">Real-World Applications</a></li>
+            </ol>
+
+            <h2 id="understanding-the-problem">Understanding the Problem</h2>
+            <p>
+              When dealing with hundreds or thousands of asynchronous operations, running them all simultaneously can overwhelm your system, exhaust resources, or hit API rate limits. The goal is to maintain optimal throughput while respecting system constraints.
+            </p>
+
+            <p><strong>Key challenges:</strong></p>
+            <ul>
+              <li>Memory consumption from too many concurrent operations</li>
+              <li>Resource exhaustion (file handles, network connections)</li>
+              <li>Rate limiting from external APIs</li>
+              <li>Variable system load requiring dynamic adjustment</li>
+              <li>Graceful error handling without stopping the entire process</li>
+            </ul>
+
+            <h2 id="building-a-basic-async-file-iterator">Building a Basic Async File Iterator</h2>
+            <p>
+              Let's start with a foundation: an async generator that recursively finds files. This pattern is memory-efficient and works well with concurrency control.
+            </p>
+
+            <pre><code>import * as fs from 'fs'
+import * as path from 'path'
+
+/**
+ * Generator that recursively yields all .md files in a directory
+ * @param dirPath - The directory path to search
+ * @yields The full path to each .md file found
+ */
+export async function* iterateMarkdownFiles(
+  dirPath: string
+): AsyncGenerator&lt;string, void, unknown&gt; {
+  try {
+    const entries = await fs.promises.readdir(dirPath, { withFileTypes: true })
+
+    for (const entry of entries) {
+      const fullPath = path.join(dirPath, entry.name)
+
+      if (entry.isDirectory()) {
+        // Recursively search subdirectories
+        yield* iterateMarkdownFiles(fullPath)
+      } else if (entry.isFile() && entry.name.endsWith('.md')) {
+        // Yield markdown files
+        yield fullPath
+      }
+    }
+  } catch (error) {
+    // Handle permission errors or other filesystem issues
+    console.warn(`Warning: Could not read directory ${dirPath}:`, error)
+  }
+}</code></pre>
+
+            <p><strong>Why async generators?</strong></p>
+            <ul>
+              <li><strong>Memory efficient</strong>: Only holds one item at a time, not the entire list</li>
+              <li><strong>Lazy evaluation</strong>: Files are discovered as needed</li>
+              <li><strong>Composable</strong>: Works seamlessly with for-await loops and other async patterns</li>
+              <li><strong>Cancellable</strong>: Can be stopped at any point without processing remaining items</li>
+            </ul>
+
+            <h2 id="implementing-fixed-concurrency-control">Implementing Fixed Concurrency Control</h2>
+            <p>
+              The core concept is maintaining a "sliding window" of active operations. When one completes, immediately start the next one.
+            </p>
+
+            <pre><code>/**
+ * Process files from an async generator with controlled concurrency
+ * @param generator - The async generator to consume
+ * @param processFile - Function to process each file
+ * @param concurrency - Maximum number of concurrent operations
+ */
+export async function processWithConcurrency&lt;T&gt;(
+  generator: AsyncGenerator&lt;T, void, unknown&gt;,
+  processFile: (item: T) =&gt; Promise&lt;void&gt;,
+  concurrency: number = 10
+): Promise&lt;void&gt; {
+  const activePromises = new Set&lt;Promise&lt;void&gt;&gt;()
+
+  for await (const item of generator) {
+    // If we're at max concurrency, wait for one to complete
+    if (activePromises.size &gt;= concurrency) {
+      await Promise.race(activePromises)
+    }
+
+    // Start processing the current item
+    const promise = processFile(item)
+      .catch(error =&gt; {
+        console.error(`Error processing item:`, error)
+      })
+      .finally(() =&gt; {
+        activePromises.delete(promise)
+      })
+
+    activePromises.add(promise)
+  }
+
+  // Wait for all remaining operations to complete
+  await Promise.all(activePromises)
+}</code></pre>
+
+            <p>
+              This implementation ensures that we never exceed our concurrency limit while maintaining optimal throughput. The sliding window approach means we start new work immediately as capacity becomes available.
+            </p>
+
+            <h2 id="creating-dynamic-concurrency-control">Creating Dynamic Concurrency Control</h2>
+            <p>
+              Sometimes you need concurrency that adapts to system conditions. Here's an advanced implementation that can adjust concurrency based on performance metrics:
+            </p>
+
+            <pre><code>class DynamicConcurrencyController {
+  private maxConcurrency: number
+  private minConcurrency: number
+  private currentConcurrency: number
+  private successCount = 0
+  private errorCount = 0
+  private lastAdjustment = Date.now()
+
+  constructor(
+    initialConcurrency = 5,
+    minConcurrency = 1,
+    maxConcurrency = 50
+  ) {
+    this.currentConcurrency = initialConcurrency
+    this.minConcurrency = minConcurrency
+    this.maxConcurrency = maxConcurrency
+  }
+
+  adjustConcurrency() {
+    const now = Date.now()
+    const timeSinceLastAdjustment = now - this.lastAdjustment
+    
+    // Only adjust every 5 seconds
+    if (timeSinceLastAdjustment &lt; 5000) return
+
+    const totalOperations = this.successCount + this.errorCount
+    if (totalOperations === 0) return
+
+    const errorRate = this.errorCount / totalOperations
+
+    if (errorRate &gt; 0.1) {
+      // High error rate - reduce concurrency
+      this.currentConcurrency = Math.max(
+        this.minConcurrency,
+        Math.floor(this.currentConcurrency * 0.8)
+      )
+    } else if (errorRate &lt; 0.05 && this.successCount &gt; 10) {
+      // Low error rate - increase concurrency
+      this.currentConcurrency = Math.min(
+        this.maxConcurrency,
+        Math.ceil(this.currentConcurrency * 1.2)
+      )
+    }
+
+    // Reset counters
+    this.successCount = 0
+    this.errorCount = 0
+    this.lastAdjustment = now
+  }
+}</code></pre>
+
+            <h2 id="advanced-patterns-and-best-practices">Advanced Patterns and Best Practices</h2>
+            
+            <h3>Circuit Breaker Pattern</h3>
+            <p>
+              Implement circuit breakers to prevent cascade failures when external services become unavailable:
+            </p>
+
+            <pre><code>class CircuitBreaker {
+  private failures = 0
+  private lastFailureTime = 0
+  private state: 'closed' | 'open' | 'half-open' = 'closed'
+  
+  constructor(
+    private threshold = 5,
+    private timeout = 60000 // 1 minute
+  ) {}
+
+  async call&lt;T&gt;(operation: () =&gt; Promise&lt;T&gt;): Promise&lt;T&gt; {
+    if (this.state === 'open') {
+      if (Date.now() - this.lastFailureTime &gt; this.timeout) {
+        this.state = 'half-open'
+      } else {
+        throw new Error('Circuit breaker is OPEN')
+      }
+    }
+
+    try {
+      const result = await operation()
+      this.onSuccess()
+      return result
+    } catch (error) {
+      this.onFailure()
+      throw error
+    }
+  }
+
+  private onSuccess() {
+    this.failures = 0
+    this.state = 'closed'
+  }
+
+  private onFailure() {
+    this.failures++
+    this.lastFailureTime = Date.now()
+    
+    if (this.failures &gt;= this.threshold) {
+      this.state = 'open'
+    }
+  }
+}</code></pre>
+
+            <h2 id="real-world-applications">Real-World Applications</h2>
+            <p>
+              These patterns are particularly useful for:
+            </p>
+            <ul>
+              <li><strong>File processing</strong>: Image resizing, document conversion, log analysis</li>
+              <li><strong>API integrations</strong>: Rate-limited third-party services, webhook processing</li>
+              <li><strong>Database operations</strong>: Batch updates, data migrations, backup operations</li>
+              <li><strong>Web scraping</strong>: Respecting robots.txt and avoiding IP blocks</li>
+              <li><strong>ETL pipelines</strong>: Processing large datasets while managing memory usage</li>
+            </ul>
+
+            <h3>Example: Processing Images with Dynamic Concurrency</h3>
+            <pre><code>async function processImages(imageDirectory: string) {
+  const controller = new DynamicConcurrencyController(5, 1, 20)
+  const circuitBreaker = new CircuitBreaker(3, 30000)
+  
+  const imageFiles = iterateMarkdownFiles(imageDirectory)
+  
+  await processWithConcurrency(
+    imageFiles,
+    async (imagePath) =&gt; {
+      await circuitBreaker.call(async () =&gt; {
+        // Your image processing logic here
+        await resizeImage(imagePath)
+        controller.recordSuccess()
+      })
+    },
+    controller.currentConcurrency
+  )
+}</code></pre>
+
+            <h2>Conclusion</h2>
+            <p>
+              Effective concurrency control is essential for building robust, scalable applications. By combining async generators, sliding window concurrency control, and adaptive algorithms, you can create systems that are both performant and resilient.
+            </p>
+            <p>
+              Remember to always monitor your applications in production and adjust concurrency limits based on actual performance metrics and resource constraints.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </Container>
+</Layout>

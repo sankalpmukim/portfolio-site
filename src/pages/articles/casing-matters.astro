@@ -1,0 +1,313 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Container from "../../components/Container.astro";
+
+const meta = {
+  author: 'Sankalp Mukim',
+  date: '2025-07-07',
+  title: 'Casing Matters',
+  description: 'A comprehensive guide on different casing conventions in programming and when to use them.'
+};
+
+function formatDate(dateString) {
+  return new Date(`${dateString}T00:00:00Z`).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+---
+
+<Layout title={`${meta.title} - Sankalp Mukim`} description={meta.description}>
+  <Container class="mt-16 lg:mt-32">
+    <div class="xl:relative">
+      <div class="mx-auto max-w-2xl">
+        <button
+          type="button"
+          onclick="history.back()"
+          aria-label="Go back to articles"
+          class="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 transition dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20 lg:absolute lg:-left-5 lg:mb-0 lg:-mt-2 xl:-top-1.5 xl:left-0 xl:mt-0"
+        >
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="h-4 w-4 stroke-zinc-500 transition group-hover:stroke-zinc-700 dark:stroke-zinc-500 dark:group-hover:stroke-zinc-400">
+            <path d="M7.25 11.25 3.75 8m0 0 3.5-3.25M3.75 8h8.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <article>
+          <header class="flex flex-col">
+            <h1 class="mt-6 text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
+              {meta.title}
+            </h1>
+            <time
+              datetime={meta.date}
+              class="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"
+            >
+              <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
+              <span class="ml-3">{formatDate(meta.date)}</span>
+            </time>
+          </header>
+          <div class="mt-8 prose dark:prose-invert">
+            <p>
+              Naming conventions might seem like a small detail, but they play a crucial role in code readability, maintainability, and team collaboration. The way you case your variables, functions, and classes can make the difference between code that's easy to understand and code that's a nightmare to work with.
+            </p>
+
+            <h2>The Big Four: Common Casing Conventions</h2>
+
+            <h3>1. camelCase</h3>
+            <p>
+              <strong>When to use:</strong> Variables, functions, and methods in JavaScript, Java, C#, and most modern languages.
+            </p>
+            <pre><code>const userName = 'john_doe'
+const calculateTotalPrice = (items) => { /* ... */ }
+const isUserLoggedIn = false</code></pre>
+            <p>
+              <strong>Why it works:</strong> Easy to read, widely adopted, and supported by most IDEs for auto-completion.
+            </p>
+
+            <h3>2. PascalCase</h3>
+            <p>
+              <strong>When to use:</strong> Classes, constructors, types, and React components.
+            </p>
+            <pre><code>class UserManager {
+  constructor() { /* ... */ }
+}
+
+interface PaymentProvider {
+  processPayment(): Promise&lt;boolean&gt;
+}
+
+const LoginForm = () => { /* ... */ }</code></pre>
+            <p>
+              <strong>Why it works:</strong> Immediately distinguishes classes and types from regular variables and functions.
+            </p>
+
+            <h3>3. snake_case</h3>
+            <p>
+              <strong>When to use:</strong> Python functions and variables, database columns, environment variables, file names.
+            </p>
+            <pre><code>def calculate_user_score(user_data):
+    return user_data['total_points'] / user_data['games_played']
+
+DATABASE_URL = "postgresql://localhost:5432/myapp"
+user_profile_image.jpg</code></pre>
+            <p>
+              <strong>Why it works:</strong> Very readable, especially for longer names. Matches Python's official style guide (PEP 8).
+            </p>
+
+            <h3>4. SCREAMING_SNAKE_CASE</h3>
+            <p>
+              <strong>When to use:</strong> Constants, environment variables, and configuration values.
+            </p>
+            <pre><code>const MAX_RETRY_ATTEMPTS = 3
+const API_BASE_URL = 'https://api.example.com'
+const DEFAULT_TIMEOUT_MS = 5000</code></pre>
+            <p>
+              <strong>Why it works:</strong> Makes constants immediately recognizable and emphasizes their immutable nature.
+            </p>
+
+            <h2>Language-Specific Conventions</h2>
+
+            <h3>JavaScript/TypeScript</h3>
+            <ul>
+              <li><strong>Variables & Functions:</strong> <code>camelCase</code></li>
+              <li><strong>Classes & Types:</strong> <code>PascalCase</code></li>
+              <li><strong>Constants:</strong> <code>SCREAMING_SNAKE_CASE</code></li>
+              <li><strong>Files:</strong> <code>kebab-case</code> or <code>camelCase</code></li>
+            </ul>
+
+            <pre><code>// Good JavaScript conventions
+const userAge = 25
+const getUserProfile = async (userId) => { /* ... */ }
+
+class DatabaseConnection {
+  connect() { /* ... */ }
+}
+
+const MAX_FILE_SIZE = 1024 * 1024 // 1MB</code></pre>
+
+            <h3>Python</h3>
+            <ul>
+              <li><strong>Variables & Functions:</strong> <code>snake_case</code></li>
+              <li><strong>Classes:</strong> <code>PascalCase</code></li>
+              <li><strong>Constants:</strong> <code>SCREAMING_SNAKE_CASE</code></li>
+              <li><strong>Modules:</strong> <code>snake_case</code></li>
+            </ul>
+
+            <pre><code># Good Python conventions
+user_name = "john_doe"
+def get_user_profile(user_id):
+    pass
+
+class DatabaseConnection:
+    def connect(self):
+        pass
+
+MAX_CONNECTIONS = 100</code></pre>
+
+            <h3>Go</h3>
+            <ul>
+              <li><strong>Public identifiers:</strong> <code>PascalCase</code></li>
+              <li><strong>Private identifiers:</strong> <code>camelCase</code></li>
+              <li><strong>Constants:</strong> <code>PascalCase</code> or <code>camelCase</code></li>
+            </ul>
+
+            <pre><code>// Good Go conventions
+package main
+
+// Public function
+func GetUserProfile(userID string) (*User, error) {
+    return getUserFromDB(userID)
+}
+
+// Private function
+func getUserFromDB(userID string) (*User, error) {
+    // Implementation
+}
+
+// Constants
+const MaxRetryAttempts = 3
+const defaultTimeout = 5 * time.Second</code></pre>
+
+            <h2>The Psychology of Casing</h2>
+
+            <h3>Readability Studies</h3>
+            <p>
+              Research has shown that <code>camelCase</code> is generally faster to read for programmers, while <code>snake_case</code> is more accessible to non-programmers. This is why:
+            </p>
+            <ul>
+              <li><strong>camelCase:</strong> Compact, familiar to developers</li>
+              <li><strong>snake_case:</strong> Mimics natural word separation</li>
+            </ul>
+
+            <h3>Cognitive Load</h3>
+            <p>
+              Consistent casing reduces cognitive load. When developers don't have to think about "Is this <code>getUserName</code> or <code>get_user_name</code>?", they can focus on the actual logic.
+            </p>
+
+            <h2>Common Mistakes and Anti-Patterns</h2>
+
+            <h3>❌ Mixing Conventions</h3>
+            <pre><code>// Bad: Inconsistent casing
+const user_name = 'john'
+const getUserAge = () => { /* ... */ }
+const User_Profile = { /* ... */ }</code></pre>
+
+            <h3>❌ Misleading Casing</h3>
+            <pre><code>// Bad: Function looks like a class
+const CreateUser = () => { /* ... */ }
+
+// Bad: Class looks like a constant
+class API_CLIENT { /* ... */ }</code></pre>
+
+            <h3>❌ Overly Long Names</h3>
+            <pre><code>// Bad: Too verbose
+const calculateTheAverageScoreForAllUsersInTheSystem = () => { /* ... */ }
+
+// Better: Concise but clear
+const calculateAverageUserScore = () => { /* ... */ }</code></pre>
+
+            <h2>Modern Tooling and Casing</h2>
+
+            <h3>Linters and Formatters</h3>
+            <p>
+              Modern tools can enforce casing conventions automatically:
+            </p>
+            <ul>
+              <li><strong>ESLint:</strong> <code>camelcase</code> rule for JavaScript</li>
+              <li><strong>Pylint:</strong> <code>snake_case</code> enforcement for Python</li>
+              <li><strong>golint:</strong> Go naming conventions</li>
+            </ul>
+
+            <h3>IDE Support</h3>
+            <p>
+              Most IDEs now provide:
+            </p>
+            <ul>
+              <li>Automatic case conversion</li>
+              <li>Naming convention warnings</li>
+              <li>Refactoring tools that maintain consistency</li>
+            </ul>
+
+            <h2>API and Database Considerations</h2>
+
+            <h3>JSON APIs</h3>
+            <p>
+              Most REST APIs use <code>snake_case</code> for JSON keys, following HTTP header conventions:
+            </p>
+            <pre><code>{
+  "user_id": 123,
+  "first_name": "John",
+  "created_at": "2023-07-07T10:00:00Z"
+}</code></pre>
+
+            <h3>GraphQL</h3>
+            <p>
+              GraphQL typically uses <code>camelCase</code> for field names:
+            </p>
+            <pre><code>query {
+  user(id: 123) {
+    firstName
+    lastName
+    createdAt
+  }
+}</code></pre>
+
+            <h3>Database Columns</h3>
+            <p>
+              Most databases prefer <code>snake_case</code> for column names:
+            </p>
+            <pre><code>CREATE TABLE users (
+  user_id SERIAL PRIMARY KEY,
+  first_name VARCHAR(100),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+
+            <h2>Team Guidelines and Best Practices</h2>
+
+            <h3>Establish Team Conventions Early</h3>
+            <ol>
+              <li>Document your team's naming conventions</li>
+              <li>Set up automated linting to enforce them</li>
+              <li>Include naming in code review checklists</li>
+              <li>Use consistent conventions across all projects</li>
+            </ol>
+
+            <h3>Consider Your Domain</h3>
+            <ul>
+              <li><strong>Web APIs:</strong> Follow REST conventions (<code>snake_case</code>)</li>
+              <li><strong>Mobile apps:</strong> Follow platform conventions (Swift: <code>camelCase</code>, Kotlin: <code>camelCase</code>)</li>
+              <li><strong>Data science:</strong> Python conventions (<code>snake_case</code>)</li>
+              <li><strong>Enterprise Java:</strong> Strict <code>camelCase</code> and <code>PascalCase</code></li>
+            </ul>
+
+            <h2>The Future of Naming</h2>
+            <p>
+              As AI-assisted coding becomes more common, consistent naming becomes even more important. Tools like GitHub Copilot and ChatGPT work better with conventional, predictable naming patterns.
+            </p>
+
+            <h2>Conclusion</h2>
+            <p>
+              Casing might seem trivial, but it's one of the most visible aspects of code quality. Good naming conventions:
+            </p>
+            <ul>
+              <li>Improve code readability and maintainability</li>
+              <li>Reduce onboarding time for new team members</li>
+              <li>Enable better tooling and automation</li>
+              <li>Demonstrate professionalism and attention to detail</li>
+            </ul>
+
+            <p>
+              Choose your conventions wisely, document them clearly, and stick to them consistently. Your future self—and your teammates—will thank you.
+            </p>
+
+            <blockquote>
+              <p>
+                "There are only two hard things in Computer Science: cache invalidation and naming things." - Phil Karlton
+              </p>
+            </blockquote>
+          </div>
+        </article>
+      </div>
+    </div>
+  </Container>
+</Layout>
