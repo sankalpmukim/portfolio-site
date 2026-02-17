@@ -6,6 +6,7 @@ import Script from 'next/script'
 import { useEffect, useRef } from 'react'
 
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 
@@ -38,6 +39,7 @@ export default function App({ Component, pageProps, router }) {
         <Footer />
       </div>
       <Analytics />
+      <SpeedInsights route={router.pathname} />
       <noscript>
         {/* eslint-disable @next/next/no-img-element */}
         <img
