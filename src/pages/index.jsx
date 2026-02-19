@@ -220,8 +220,9 @@ function Resume() {
               {/* ml-auto  */}
               <dd
                 className="text-xs text-zinc-400 dark:text-zinc-500"
-                aria-label={`${role.start.label ?? role.start} until ${role.end.label ?? role.end
-                  }`}
+                aria-label={`${role.start.label ?? role.start} until ${
+                  role.end.label ?? role.end
+                }`}
               >
                 <time dateTime={role.start.dateTime ?? role.start}>
                   {role.start.label ?? role.start}
@@ -278,13 +279,13 @@ export default function Home({ articles }) {
   return (
     <>
       <Head>
-        <title>Sankalp Mukim - Tech, Engineering</title>
+        <title>Sankalp Mukim - Backend, Devops, Engineering</title>
         <meta name="description" content={CONSTANTS.INTRO} />
       </Head>
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-            Tech, Engineering.
+            Backend, Devops, Engineering.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
             {CONSTANTS.INTRO}
