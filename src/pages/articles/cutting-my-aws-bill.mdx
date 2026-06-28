@@ -104,10 +104,10 @@ Two public IPv4 addresses. Since February 2024, AWS charges **$0.005/hour (~$3.6
 
 | Elastic IP               | Attached to                                    | Necessary? |
 | ------------------------ | ---------------------------------------------- | ---------- |
-| EC2 EIP (13.126.157.192) | The EC2 instance                               | Yes        |
-| RDS EIP (65.2.86.189)    | **RDS** managed ENI (`RequesterManaged: True`) | **No**     |
+| EC2 EIP (`198.51.100.10`) | The EC2 instance                               | Yes        |
+| RDS EIP (`198.51.100.20`) | **RDS** managed ENI (`RequesterManaged: True`) | **No**     |
 
-**The lesson:** setting RDS `PubliclyAccessible=True` silently allocates a _billable public IPv4_. The EC2 and RDS were in the _same subnet_ — the app could reach Postgres over the private network (`172.31.30.217`) with zero need for a public IP on the DB. That single checkbox was costing me $3.60/month.
+**The lesson:** setting RDS `PubliclyAccessible=True` silently allocates a _billable public IPv4_. The EC2 and RDS were in the _same subnet_ — the app could reach Postgres over the private network (`10.0.0.5`) with zero need for a public IP on the DB. That single checkbox was costing me $3.60/month.
 
 #### The RDS line — the real target
 
@@ -142,11 +142,11 @@ With the gross bill understood, the plan almost wrote itself. Four levers, in or
 The instance had been resized over time: `medium` → `large` → back. For a single low-traffic Next.js app sharing a box with nginx, a `t3a.small` (2 vCPU, 2 GB) is plenty. Stop, change type, start:
 
 ```bash
-aws ec2 stop-instances --instance-ids i-0550c917cdb5d388 --region ap-south-1
-aws ec2 wait instance-stopped --instance-ids i-0550c917cdb5d388 --region ap-south-1
-aws ec2 modify-instance-attribute --instance-id i-0550c917cdb5d388 \
-  --instance-type '{"Value": "t3a.small"}' --region ap-south-1
-aws ec2 start-instances --instance-ids i-0550c917cdb5d388 --region ap-south-1
+aws ec2 stop-instances --instance-ids i-<instance-id> --region <region>
+aws ec2 wait instance-stopped --instance-ids i-<instance-id> --region <region>
+aws ec2 modify-instance-attribute --instance-id i-<instance-id> \
+  --instance-type '{"Value": "t3a.small"}' --region <region>
+aws ec2 start-instances --instance-ids i-<instance-id> --region <region>
 ```
 
 The catch: 2 GB RAM is tight when you also run nginx, a postgres container, and Node. We'll come back to that — it's where swap enters the story.
@@ -193,9 +193,9 @@ Once I had breathing room, the real culprits (found via `du -hx --max-depth=1 / 
 
 | Culprit                                         | Size   |
 | ----------------------------------------------- | ------ |
-| `~/.npm/_cacache` — a _cache_                   | 1.9 GB |
-| A stale `kibana` clone with broken `tmp_pack_*` | 4.7 GB |
-| Orphaned `node_modules` (CodeNomad, nm-ogss)    | ~2 GB  |
+| `~/.npm/_cacache` — a _cache_                    | 1.9 GB |
+| A stale repo clone with broken build artifacts   | 4.7 GB |
+| Orphaned `node_modules` from abandoned projects  | ~2 GB  |
 
 **Lesson:** on small EBS volumes, treat disk like memory. Audit periodically. **Cache directories are silent killers** — a _cache_ ate 1.9 GB. Also: clear the npm cache _after_ building, not before — it regrew to 873 MB the moment I ran `npm install` again.
 
@@ -228,7 +228,7 @@ Restoring the dump failed on the first table:
 
 ```
 ERROR: insert or update on table "...donation" violates foreign key constraint
-DETAIL: Key (phone_number)=(9821041537) is not present in table "...user".
+DETAIL: Key (phone_number)=(<redacted>) is not present in table "...user".
 ```
 
 **Cause:** `pg_dump` writes tables in **alphabetical order** — `donation` before `user`. But `donation.phone_number` has a FK to `user.phone_number`, so the parent rows must exist first.
@@ -304,9 +304,9 @@ That's how one architectural decision (where the app runs) quietly eliminated th
 
 | Removed                                                  | Freed        |
 | -------------------------------------------------------- | ------------ |
-| `~/projects/kibana` (stale clone with broken `tmp_pack`) | 4.7 GB       |
-| `~/CodeNomad` + systemd + nginx site + cert              | 1.3 GB + RAM |
-| `~/nm-ogss-website-frontend` (deployed elsewhere)        | 848 MB       |
+| Stale repo clone with broken build artifacts             | 4.7 GB       |
+| Old project + systemd + nginx site + cert                | 1.3 GB + RAM |
+| Another project's `node_modules` (deployed elsewhere)    | 848 MB       |
 | npm cache (`~/.npm`)                                     | 873 MB       |
 
 Disk went from **100% → 63%**. Not a direct line item, but a full EBS is a ticking bomb — and resizing EBS _costs_ money.
@@ -334,7 +334,7 @@ RDS Postgres ← public EIP + SG + subnet    Local Docker postgres (127.0.0.1:54
 
 After Act 2, the _only_ remaining AWS charge for this workload was a single **public IPv4 Elastic IP** on the EC2:
 
-- `eipalloc-04aad403e04f04bb0` → `13.126.157.192`
+- Elastic IP allocation → `<public-ipv4>`
 - Cost: **$0.005/hour = ~$3.60/month**
 
 **IPv6 addresses on AWS are free.** The thesis: give the instance an IPv6 address, point DNS at it, release the IPv4 EIP, save $3.60/month ($43/year).
@@ -348,30 +348,30 @@ Starting state: everything was IPv4-only. No IPv6 CIDR on the VPC, subnet, route
 ```bash
 # 1. Associate an IPv6 CIDR to the VPC (AWS assigns a /56)
 aws ec2 associate-vpc-cidr-block \
-  --vpc-id vpc-0f925418d7df29d38 \
-  --amazon-provided-ipv6-cidr-block --region ap-south-1
-# → 2406:da1a:1405:1a00::/56
+  --vpc-id vpc-<vpc-id> \
+  --amazon-provided-ipv6-cidr-block --region <region>
+# → 2001:db8::/56
 
 # 2. Carve a /64 for the subnet
 aws ec2 associate-subnet-cidr-block \
-  --subnet-id subnet-0a76d89d742ee16ae \
-  --ipv6-cidr-block 2406:da1a:1405:1a00::/64 --region ap-south-1
+  --subnet-id subnet-<subnet-id> \
+  --ipv6-cidr-block 2001:db8::/64 --region <region>
 
 # 3. Add the IPv6 default route
 aws ec2 create-route \
-  --route-table-id rtb-0d866edbcdbe4c51c \
+  --route-table-id rtb-<route-table-id> \
   --destination-ipv6-cidr-block ::/0 \
-  --gateway-id igw-034991578bca63710 --region ap-south-1
+  --gateway-id igw-<gateway-id> --region <region>
 
 # 4. Assign an IPv6 address to the instance ENI
 aws ec2 assign-ipv6-addresses \
-  --network-interface-id eni-09b4987763954a65a \
-  --ipv6-address-count 1 --region ap-south-1
-# → 2406:da1a:1405:1a00:9a8c:fd6c:db26:e416
+  --network-interface-id eni-<eni-id> \
+  --ipv6-address-count 1 --region <region>
+# → 2001:db8::1234:5678:9abc:def0
 
 # 5. Add IPv6 inbound rules to the security group
 aws ec2 authorize-security-group-ingress \
-  --group-id sg-02c91d4f9d46bf098 --region ap-south-1 --ip-permissions \
+  --group-id sg-<security-group-id> --region <region> --ip-permissions \
     IpProtocol=tcp,FromPort=22,ToPort=22,Ipv6Ranges='[{CidrIpv6=::/0}]' \
     IpProtocol=tcp,FromPort=80,ToPort=80,Ipv6Ranges='[{CidrIpv6=::/0}]' \
     IpProtocol=tcp,FromPort=443,ToPort=443,Ipv6Ranges='[{CidrIpv6=::/0}]'
@@ -388,7 +388,7 @@ aws ec2 authorize-security-group-ingress \
 I wrote a loop to wait for the AAAA records:
 
 ```bash
-DOMAINS="sevasankalp.sankalpmukim.dev http.sankalpmukim.dev ..."
+DOMAINS="app.example.com api.example.com ..."
 for d in $DOMAINS; do ... done     # ran ONCE with the whole string
 ```
 
@@ -398,10 +398,10 @@ I was running in **zsh**. Unlike bash, **zsh does not word-split unquoted variab
 
 #### Negative DNS caching broke SSH after propagation
 
-After `clawdbot.sankalpmukim.dev`'s AAAA propagated (verified via `dig @1.1.1.1`), `ssh -6 myvm` still failed:
+After `ssh.example.com`'s AAAA propagated (verified via `dig @1.1.1.1`), `ssh -6 myvm` still failed:
 
 ```
-ssh: Could not resolve hostname clawdbot.sankalpmukim.dev: nodename nor servname provided
+ssh: Could not resolve hostname ssh.example.com: nodename nor servname provided
 ```
 
 The local resolver had cached a **negative result** (NXDOMAIN) from the earlier lookup _before_ the record existed. `dig` sometimes bypasses the cache; `ssh` uses `getaddrinfo()` which respects it.
@@ -417,9 +417,9 @@ sudo killall -HUP mDNSResponder
 
 #### The SSH hostname was a separate subdomain (near-lockout)
 
-The `ssh myvm` alias pointed to `HostName clawdbot.sankalpmukim.dev` — a **different subdomain** from the five web domains. It had an A record but **no AAAA record**.
+The `ssh myvm` alias pointed to `HostName ssh.example.com` — a **different subdomain** from the five web domains. It had an A record but **no AAAA record**.
 
-If I had released the IPv4 EIP at that point, `clawdbot.sankalpmukim.dev` would resolve to nothing → **complete SSH lockout**. No IPv4, no IPv6, no way in.
+If I had released the IPv4 EIP at that point, `ssh.example.com` would resolve to nothing → **complete SSH lockout**. No IPv4, no IPv6, no way in.
 
 **Lesson:** **always enumerate _every_ hostname that points at the box** — web, SSH, monitoring, anything — before removing IPv4. I caught this one by checking the SSH config before the cutover, not after.
 
@@ -428,8 +428,8 @@ If I had released the IPv4 EIP at that point, `clawdbot.sankalpmukim.dev` would 
 This is where "release the EIP, save $3.60" turned into an hour of work.
 
 ```bash
-aws ec2 disassociate-address --public-ip 13.126.157.192 --region ap-south-1
-aws ec2 release-address --allocation-id eipalloc-04aad403e04f04bb0 --region ap-south-1
+aws ec2 disassociate-address --public-ip <public-ipv4> --region <region>
+aws ec2 release-address --allocation-id eipalloc-<allocation-id> --region <region>
 ```
 
 The EIP released cleanly. But the instance **immediately grabbed a new, auto-assigned public IPv4**. An auto-assigned public IPv4 is billed at the **same $0.005/hr** — so I had saved exactly **nothing**.
@@ -457,7 +457,7 @@ Result: `PublicIpAddress: None`. The $3.60/mo was _actually_ gone.
 
 The new instance — despite being from an AMI of the old one — presented a **different SSH host key**, triggering `REMOTE HOST IDENTIFICATION HAS CHANGED`. AWS AMIs run cloud-init on first boot, which **deletes and regenerates host keys** to guarantee uniqueness per instance.
 
-**Fix:** `ssh-keygen -R clawdbot.sankalpmukim.dev` then reconnect. Expected and safe when you control the instance — but a sharp edge when rebuilding from your own AMI.
+**Fix:** `ssh-keygen -R ssh.example.com` then reconnect. Expected and safe when you control the instance — but a sharp edge when rebuilding from your own AMI.
 
 ---
 
@@ -486,7 +486,7 @@ The critical follow-up question: **which services the box actually depends on ar
 
 **The good news:** the major package registries (npm, Docker Hub, Ubuntu) all have IPv6, so routine maintenance still works. DNS keeps working because AWS's VPC DNS resolver (`.2`) is reached over the **private** IPv4 network, not the internet.
 
-**The real casualty:** **GitHub has no IPv6 at all.** Neither `github.com` nor `api.github.com` publish AAAA records. The box could no longer `git push`/`git pull`. This silently broke the on-box `control-center` repo sync _and_ a 5-minute portfolio `sync-system` cron. _The docs commit for this very write-up had to be pushed from a different machine with IPv4._
+**The real casualty:** **GitHub has no IPv6 at all.** Neither `github.com` nor `api.github.com` publish AAAA records. The box could no longer `git push`/`git pull`. This silently broke the on-box repo sync _and_ a 5-minute cron job. _The docs commit for this very write-up had to be pushed from a different machine with IPv4._
 
 **The brutal trade-off:** restoring IPv4 egress requires either
 
@@ -554,7 +554,7 @@ And the IPv6 piece specifically:
 
 | Component | Setup                                                                      |
 | --------- | -------------------------------------------------------------------------- |
-| App       | Next.js via systemd `seva-sankalp.service` on `:3000`                      |
+| App       | Next.js via systemd service on `:3000`                                     |
 | DB        | `postgres:18-alpine` Docker container, named volume, `127.0.0.1:5432` only |
 | Proxy     | nginx + Let's Encrypt, HTTP→HTTPS redirect                                 |
 | DNS       | AAAA records → EC2 IPv6 (Cloudflare, DNS-only)                             |
